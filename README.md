@@ -2,6 +2,8 @@
 
 Strategy, ad scripts and platform setup. Single source of truth.
 
+**Live plan: [`strategy/06-the-3k-plan.md`](strategy/06-the-3k-plan.md)** — $3,000/mo, Google Search + Meta retargeting, Sydney metro.
+
 ## Start here
 
 | Doc | What it is |
