@@ -32,14 +32,17 @@ start-from-scratch problem. It is a **conversion and distribution** problem.
 
 ## Real blockers
 
-**1. No Alphalogix ad account.** The only ad accounts on this login are:
+**1. No Alphalogix ad account.** The Business portfolio itself **does exist** —
+`1601856800244057`, created January 2023 — and it already owns the Facebook Page.
+What's missing is an ad account under it. The only ad accounts available are:
 
 - `23165511` — "Peter Bublé", personal, **no payment method**
 - `411185735338258` — "Virvio", business `464919709822021`, has payment method
 
-Running Alphalogix ads from the Virvio account permanently mixes two businesses'
-pixel data, billing and ad history. Don't. We need a clean Alphalogix Business
-Manager + ad account. See `platforms/01-meta-setup.md`.
+Neither is Alphalogix. **The ad account creation limit on the portfolio is 1**, so
+currency (AUD) and timezone (Australia/Sydney) must be right first time — both are
+permanent. The portfolio is also **Unverified** with every business detail blank, and
+two-factor authentication is off. See `platforms/01-meta-setup.md`.
 
 **2. No Meta Pixel.** This is the most expensive gap. Months of content has driven
 traffic to the blog, YouTube and the free calculator — and **none of that audience
