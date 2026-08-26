@@ -36,7 +36,7 @@ Here's the honest version: almost every breach we're called into starts the same
 
 Not sophisticated. Just preventable.
 
-Managed IT, cyber security and surveillance — one Sydney partner, every Australian state.
+IT management, networks, cyber security and surveillance — one Sydney partner, every Australian state.
 
 Book a free 15-minute review. We'll tell you what's actually exposed, even if you never hire us.
 ```
@@ -51,20 +51,25 @@ Book a free 15-minute review. We'll tell you what's actually exposed, even if yo
 
 Leads with the structural wedge. Best where multi-site buyers are in the audience.
 
+**Updated after the site review:** Alphalogix also resells internet (Aussie Broadband,
+Breeze Connect) and runs phone systems. So the wedge is bigger than IT-plus-cameras —
+it is internet, phones, network, IT, cyber and cameras from one vendor. For a
+multi-site operator juggling five suppliers, that is the whole pitch.
+
 **Primary text**
 ```
 Your IT company doesn't do cameras. Your camera company can't touch your IT.
 
 That gap is where the problems live — the network your cameras sit on, the storage, the remote access, the exposure.
 
-Alphalogix does both. Managed IT, cyber security and AI surveillance from one Sydney-based partner.
+Alphalogix does all of it. Internet, phones, networks, IT management, cyber security and AI surveillance — one Sydney partner, one number to call.
 
-Microsoft Partner. Built to ACSC Essential Eight.
+Microsoft and CrowdStrike Partner. Built to ACSC Essential Eight.
 
 Book a free 15-minute review.
 ```
 
-- **Headline** (23/40): `One Partner. Not Three.`
+- **Headline** (22/40): `One Partner. Not Five.`
 - **Description** (24/30): `IT, cyber & surveillance`
 - **CTA:** Book Now
 
@@ -80,7 +85,7 @@ How long would your business survive without email tomorrow morning?
 
 Not a scare tactic — a planning question. Most owners have never actually been asked it.
 
-We're Alphalogix. Managed IT, cyber security and surveillance for Australian businesses since 2022.
+We're Alphalogix. IT management, networks, cyber security and surveillance for Australian businesses since 2022.
 
 Book a free 15-minute review and we'll give you a straight answer on where you stand.
 ```
@@ -116,7 +121,7 @@ Here's the honest version: almost every breach we get called into starts the sam
 
 Not sophisticated. Just preventable.
 
-We're Alphalogix — managed IT, cyber security and AI surveillance for Australian businesses. Sydney based, servicing every state.
+We're Alphalogix — IT management, networks, cyber security and AI surveillance for Australian businesses. Sydney based, servicing every state.
 
 Book a free 15-minute review. We'll tell you what's actually exposed in your business, even if you never hire us. 👇
 [BOOKING LINK]
@@ -140,7 +145,7 @@ Almost every breach we get called into starts the same way:
 
 Not sophisticated. Just preventable.
 
-Managed IT, cyber security and AI surveillance. Sydney based, every Australian state.
+IT management, networks, cyber security and AI surveillance. Sydney based, every Australian state.
 
 Free 15-minute review — we'll tell you what's exposed, even if you never hire us.
 
