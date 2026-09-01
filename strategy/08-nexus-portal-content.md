@@ -5,28 +5,27 @@
 
 ---
 
-## ⚠️ Before publishing: audit every frame for client data
+## ⚠️ Before publishing: confirm the demo data is genuinely synthetic
 
-This is a **client portal**. A screen recording of it may contain:
+**Good news:** the recording is of `demo.alphalogix.com.au`, not the production
+environment at `nexus.alphalogix.com.au`. That removes most of the risk.
 
-- Real client or company names
+**Still worth 30 seconds of checking**, because demo environments are very often
+clones of production with the login changed rather than purpose-built with invented
+data. Scrub through once looking for:
+
+- Real client or company names in lists, tickets or asset records
 - Staff names and email addresses
 - Ticket subjects and contents
-- Asset names, hostnames, serial numbers
-- IP addresses, network ranges, tenant IDs
-- Security posture or open vulnerabilities for a named client
+- Hostnames, serial numbers, IP addresses, tenant IDs
+- Security posture or open vulnerabilities attributable to a named client
 
-**For a cyber security company, leaking a client's data in a marketing video is
-catastrophic** — commercially, contractually, and possibly under the Privacy Act. It
-would also destroy the exact trust the brand is built on, permanently and publicly.
+For a cyber security company, a real client's data appearing in a marketing video is
+catastrophic — commercially, contractually, and under the Privacy Act. Blurring is not
+sufficient; a paused frame is a screenshot.
 
-**Do not publish until every frame is checked.** Re-record against a demo tenant with
-invented data if there is any doubt. Blur is not sufficient — it gets reversed, and
-a paused frame is a screenshot.
-
-This is the single highest-risk item in the whole marketing programme so far.
-
----
+If it's all invented data, publish with confidence. If anything real appears, re-record
+that section against seeded dummy data.
 
 ## The reframe: this is not a product launch
 
