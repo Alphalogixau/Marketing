@@ -157,15 +157,18 @@ jobs:
             fi
           done
 
-          # The official wordmark is inlined (see components/logo.tsx for why),
-          # so assert its rendered markup is present rather than a file request.
-          if ! grep -qF 'aria-label="Alphalogix"' out/index.html; then
-            echo "::error::the official wordmark is no longer rendered on the landing page"
+          # The official wordmark must be referenced AND actually emitted.
+          # A referenced-but-missing logo leaves a broken image with a green build.
+          if ! grep -qF '/brand/alphalogix-horizontal-white.png' out/index.html; then
+            echo "::error::the landing page no longer references the official wordmark"
             fail=1
           fi
-          # The verbatim original must stay in the repo as the source of record.
-          if [ ! -f public/brand/alphalogix-logo.svg ]; then
-            echo "::error::public/brand/alphalogix-logo.svg (the original brand asset) is missing"
+          if ! grep -qF 'alt="Alphalogix"' out/index.html; then
+            echo "::error::the wordmark lost its alt text"
+            fail=1
+          fi
+          if [ ! -f out/brand/alphalogix-horizontal-white.png ]; then
+            echo "::error::the wordmark is referenced but was not emitted into out/"
             fail=1
           fi
 

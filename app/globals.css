@@ -22,6 +22,11 @@
   --color-navy-100: #d8dfe4;
   --color-navy-50:  #f2f5f7;
 
+  /* The mark's own blue, sampled from assets/logos/alphalogix-horizontal-white.png.
+     Canonical for fills, marks and large shapes. Not for small text on dark
+     surfaces — see the msp ramp below. */
+  --color-brand-500: #0033f9;
+
   /* Pillar accents */
   --color-nexus-400: #93e4ff;   /* Nexus   — orchestration, data flow */
   --color-nexus-500: #4cc9f0;
@@ -29,9 +34,15 @@
   --color-guardian-400: #ceeb59; /* Guardian — active monitoring */
   --color-guardian-500: #adcc31;
   --color-guardian-600: #869e1f;
-  --color-msp-400: #527eff;      /* Managed services — trust, continuity */
-  --color-msp-500: #204ce5;
-  --color-msp-600: #001ab3;
+  /* Managed services. Hue-matched to the wordmark's own blue rather than the
+     old WordPress CSS values, since the mark now sits directly beside these
+     accents. Every value is either sampled from the logo or a tint of it,
+     and each was checked against the surface it is actually used on:
+       #0033f9 is 7.39:1 on white but only 2.60:1 on navy-950, so it is the
+       light-surface value and must never carry small text on a dark one. */
+  --color-msp-400: #6685fb;      /* text on dark — 5.78:1 on navy-950 */
+  --color-msp-500: #0033f9;      /* the wordmark's blue — 7.39:1 on white */
+  --color-msp-600: #0027cf;      /* also sampled from the logo palette */
 
   /* Semantic */
   --color-surface: #ffffff;
