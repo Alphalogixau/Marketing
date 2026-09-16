@@ -1,7 +1,14 @@
 import Link from 'next/link'
 import { MapPin, Mail } from 'lucide-react'
 import { services, company } from '@/lib/content'
-import { contact, socials, wpRoutes, offices, nexusAppUrl } from '@/lib/contact'
+import {
+  contact,
+  socials,
+  wpRoutes,
+  offices,
+  nexusAppUrl,
+  helpdeskUrl,
+} from '@/lib/contact'
 import { Wordmark } from '@/components/logo'
 
 export function SiteFooter() {
@@ -81,6 +88,16 @@ export function SiteFooter() {
             <FooterLink href={wpRoutes.caseStudies} external>Case studies</FooterLink>
             <FooterLink href={wpRoutes.blog} external>Blog</FooterLink>
             <FooterLink href={wpRoutes.contact} external>Contact</FooterLink>
+            <li>
+              <a
+                href={helpdeskUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm transition-colors hover:text-white"
+              >
+                Helpdesk
+              </a>
+            </li>
           </FooterCol>
         </div>
 

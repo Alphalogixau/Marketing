@@ -63,3 +63,8 @@ export const wpRoutes = {
 /** The Nexus portal itself, per alphalogix-nexus/README.md. Distinct from
  *  /platform/nexus, which is the marketing page for it. */
 export const nexusAppUrl = 'https://nexus.alphalogix.com.au' as const
+
+/** The customer helpdesk — the NinjaOne-served end-user portal. There is no
+ *  helpdesk page on the WordPress site, so this is the only destination for
+ *  the menu item. Verified reachable (HTTP 200) on 16 Sep 2026. */
+export const helpdeskUrl = 'https://alphalogix.rmmservice.com.au/' as const

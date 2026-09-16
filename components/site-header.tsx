@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { services } from '@/lib/content'
-import { wpRoutes, hq } from '@/lib/contact'
+import { wpRoutes, hq, helpdeskUrl } from '@/lib/contact'
 import { Wordmark } from '@/components/logo'
 
 const platformItems = [
@@ -119,6 +119,14 @@ export function SiteHeader() {
           <a href={wpRoutes.about} className={navLink}>
             About
           </a>
+          <a
+            href={helpdeskUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={navLink}
+          >
+            Helpdesk
+          </a>
         </nav>
 
         <div className="ml-auto hidden items-center gap-3 lg:flex">
@@ -171,6 +179,14 @@ export function SiteHeader() {
                   </a>
                 ))}
               </MobileGroup>
+              <a
+                href={helpdeskUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={mobileLink}
+              >
+                Helpdesk
+              </a>
               <a
                 href={`tel:${hq.tel}`}
                 className="block rounded-full border border-white/20 px-4 py-3 text-center text-sm font-semibold tabular-nums text-white"
