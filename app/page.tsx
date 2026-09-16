@@ -89,7 +89,7 @@ export default function HomePage() {
             </Reveal>
 
             <Reveal delay={0.32}>
-              <p className="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-navy-400">
+              <p className="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-navy-300">
                 Guardian sees · Nexus orchestrates
               </p>
             </Reveal>
@@ -106,16 +106,17 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <h2 className="max-w-2xl text-balance text-[length:var(--text-h2)] font-semibold tracking-tight text-white">
-              Two products, and the field capability to actually deploy them.
+              Two products in development. One services business that has
+              been running since 2022.
             </h2>
             <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-navy-300">
-              Guardian is not a download. It is an appliance that has to be
-              racked, networked, firewalled, monitored and maintained at your
-              site. Nexus only knows your estate is healthy because engineers
-              are already monitoring it. A software company selling either one
-              would have to go and find that capability. We started with it.
+              Guardian ships as an appliance. Someone has to rack it, put it
+              on the network, firewall it and keep it patched — and Nexus only
+              reports that your sites are healthy because engineers are already
+              monitoring them. We had those engineers before we had either
+              product.
             </p>
-            <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-navy-400">
+            <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-navy-300">
               Both products are in development, and we would rather say so than
               show you a screenshot of something that does not exist yet.
             </p>
@@ -226,7 +227,7 @@ export default function HomePage() {
                     <h3 className="text-sm font-semibold uppercase tracking-widest text-navy-300">
                       Incident lifecycle
                     </h3>
-                    <span className="font-mono text-xs text-navy-500">9 stages</span>
+                    <span className="font-mono text-xs text-navy-300">9 stages</span>
                   </div>
                   <IncidentPipeline />
                 </div>
@@ -317,7 +318,8 @@ export default function HomePage() {
           <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
             <Reveal>
               <h2 className="text-balance text-[length:var(--text-h2)] font-semibold tracking-tight text-white">
-                We deployed everyone else&rsquo;s platform first.
+                We are certified on five surveillance platforms. That is why
+                we built our own.
               </h2>
               <div className="mt-6 space-y-4 text-pretty leading-relaxed text-navy-300">
                 <p>
@@ -327,10 +329,11 @@ export default function HomePage() {
                   single office to multi-site national networks.
                 </p>
                 <p className="text-navy-200">
-                  Guardian and Nexus exist because of what that work taught us.
-                  Operators drowning in alerts they had learned to ignore.
-                  Customers with no way to see what they owned or whether it was
-                  online. We could not buy the fix, so we are building it.
+                  Across those installs we kept meeting the same two problems:
+                  control rooms where staff had quietly stopped trusting the
+                  alerts, and customers who could not tell us how many cameras
+                  they owned. Nothing on the market fixed either one, so we
+                  started building.
                 </p>
               </div>
             </Reveal>
@@ -394,31 +397,30 @@ export default function HomePage() {
           This section is the primary internal link source for those pages —
           they are the only pages currently earning organic traffic. Do not
           remove it. See docs/SEO-CONTINUITY.md */}
-      <section className="bg-navy-950 py-24 sm:py-32">
+      <section className="border-y border-navy-200 bg-navy-50 py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <h2 className="max-w-2xl text-balance text-[length:var(--text-h2)] font-semibold tracking-tight text-white">
-              One partner for the whole estate.
+            <h2 className="max-w-2xl text-balance text-[length:var(--text-h2)] font-semibold tracking-tight text-navy-900">
+              Managed IT, security, cloud and communications — one team.
             </h2>
-            <p className="mt-4 max-w-2xl leading-relaxed text-navy-300">
-              The practice that delivers the platform is also a complete
-              managed IT service in its own right — available today, for
-              businesses across every Australian state.
+            <p className="mt-4 max-w-2xl leading-relaxed text-navy-600">
+              Six services, available today, for businesses from a single
+              office to a multi-site national network.
             </p>
           </Reveal>
 
-          <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-navy-200 bg-navy-200 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => (
               <Reveal key={s.slug} delay={i * 0.05}>
                 <a
                   href={s.href}
-                  className="group flex h-full flex-col bg-navy-950 p-7 transition-colors hover:bg-navy-900"
+                  className="group flex h-full flex-col bg-white p-7 transition-colors hover:bg-navy-50"
                 >
-                  <h3 className="flex items-center justify-between gap-3 text-[length:var(--text-h3)] font-semibold text-white">
+                  <h3 className="flex items-center justify-between gap-3 text-[length:var(--text-h3)] font-semibold text-navy-900">
                     {s.title}
-                    <ArrowRight className="size-4 shrink-0 text-navy-500 transition-all group-hover:translate-x-0.5 group-hover:text-msp-400" />
+                    <ArrowRight className="size-4 shrink-0 text-navy-400 transition-all group-hover:translate-x-0.5 group-hover:text-msp-500" />
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-navy-300">{s.summary}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-navy-600">{s.summary}</p>
                 </a>
               </Reveal>
             ))}
@@ -434,18 +436,18 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <h2 className="max-w-2xl text-balance text-[length:var(--text-h2)] font-semibold tracking-tight text-white">
-              Someone to call in every state.
+              Eight offices. Every state and territory.
             </h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-navy-300">
-              Multi-site estates do not respect state borders. Neither do we —
-              tap your state and you get our team there.
+              If you have sites in more than one state, you get a local number
+              for each of them. Tap yours below.
             </p>
           </Reveal>
           <div className="mt-12">
             <NationalPresence />
           </div>
           <Reveal delay={0.1}>
-            <p className="mt-8 text-sm text-navy-400">
+            <p className="mt-8 text-sm text-navy-300">
               Head office:{' '}
               <a
                 href={contact.addressHref}
@@ -476,12 +478,13 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <h2 className="max-w-2xl text-balance text-[length:var(--text-h2)] font-semibold tracking-tight text-white">
-              What we have actually seen.
+              Field notes from recent jobs.
             </h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-navy-300">
-              Field notes from real jobs — the hack we unpicked, the outage
-              playbook, and what the Australian retail crime numbers actually
-              mean.
+              Nine write-ups from the last few months: a phishing rule hidden
+              in a client’s mailbox, what the first ten minutes of an outage
+              should look like, and where the Australian retail crime numbers
+              came from.
             </p>
           </Reveal>
 
@@ -519,12 +522,12 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
           <Reveal>
             <h2 className="text-balance text-[length:var(--text-h1)] font-semibold tracking-tight text-white">
-              Let&rsquo;s talk about your estate.
+              Tell us what you are running.
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-pretty leading-relaxed text-navy-300">
-              Whether you need a managed IT partner today or want to talk about
-              Guardian and Nexus as they come together, start with a
-              conversation.
+              If you need a managed IT partner now, we can help this week. If
+              you want to talk about Guardian or Nexus, we will be straight with
+              you about where they are.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <a

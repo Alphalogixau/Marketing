@@ -189,3 +189,12 @@ jobs:
           fi
 
           exit $fail
+
+      # Static greps and typecheck cannot see what the page actually looks
+      # like. A retint pass once shipped an <h2> in navy-900 on a navy-900
+      # section — contrast 1:1, invisible, with a fully green build.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Render check (overflow, console errors, WCAG AA contrast)
+        run: npm run check:render

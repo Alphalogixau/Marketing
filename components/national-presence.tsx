@@ -49,7 +49,7 @@ export function NationalPresence() {
             <div>
               <span className="sr-only">{o.stateName} — call </span>
               <span className="flex items-center gap-2 text-[0.9375rem] font-semibold tabular-nums text-white">
-                <Phone className="size-3.5 shrink-0 text-navy-400 transition-colors group-hover:text-msp-400" />
+                <Phone className="size-3.5 shrink-0 text-navy-300 transition-colors group-hover:text-msp-400" />
                 {o.phone}
               </span>
             </div>

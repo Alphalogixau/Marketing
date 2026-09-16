@@ -199,7 +199,7 @@ const mobileLink =
 function MobileGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-widest text-navy-400">
+      <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-widest text-navy-300">
         {title}
       </p>
       {children}

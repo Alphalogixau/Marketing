@@ -82,7 +82,7 @@ export function IncidentPipeline() {
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                     className={cn(
                       'grid size-12 place-items-center rounded-full border-2 bg-navy-900 font-mono text-sm tabular-nums',
-                      lit ? 'text-guardian-400' : 'text-navy-400',
+                      lit ? 'text-guardian-400' : 'text-navy-300',
                     )}
                   >
                     {String(stage.n).padStart(2, '0')}
@@ -126,7 +126,7 @@ export function IncidentPipeline() {
         })}
       </ol>
 
-      <p className="mt-6 pl-4 text-xs text-navy-400">
+      <p className="mt-6 pl-4 text-xs text-navy-300">
         The pipeline as built — see{' '}
         <span className="font-mono text-navy-300">GUARDIAN_V0_1_ARCHITECTURE.md §3</span>.
       </p>

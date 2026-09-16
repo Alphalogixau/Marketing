@@ -74,7 +74,7 @@ export function ResilienceVisual() {
         <span
           className={cn(
             'rounded-full px-2.5 py-1 font-mono text-[0.6875rem] font-semibold transition-colors duration-500',
-            severed ? 'bg-guardian-400/15 text-guardian-400' : 'bg-white/5 text-navy-400',
+            severed ? 'bg-guardian-400/15 text-guardian-400' : 'bg-white/5 text-navy-300',
           )}
         >
           {severed ? 'link down' : 'link up'}

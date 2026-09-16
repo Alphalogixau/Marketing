@@ -24,14 +24,14 @@ export function SiteFooter() {
                 rel="noopener noreferrer"
                 className="flex items-start gap-2.5 transition-colors hover:text-white"
               >
-                <MapPin className="mt-0.5 size-4 shrink-0 text-navy-500" />
+                <MapPin className="mt-0.5 size-4 shrink-0 text-navy-300" />
                 <span>{contact.address}</span>
               </a>
               <a
                 href={contact.emailHref}
                 className="flex items-center gap-2.5 transition-colors hover:text-white"
               >
-                <Mail className="size-4 shrink-0 text-navy-500" />
+                <Mail className="size-4 shrink-0 text-navy-300" />
                 <span>{contact.email}</span>
               </a>
             </address>
@@ -96,7 +96,7 @@ export function SiteFooter() {
                   href={`tel:${o.tel}`}
                   className="flex items-baseline gap-2 text-sm transition-colors hover:text-white"
                 >
-                  <span className="w-8 shrink-0 font-mono text-xs uppercase tracking-wider text-navy-500">
+                  <span className="w-8 shrink-0 font-mono text-xs uppercase tracking-wider text-navy-300">
                     {o.state}
                   </span>
                   <span className="tabular-nums">{o.phone}</span>

@@ -64,7 +64,7 @@ export function ProductShell({
 
           {product.appDomain && (
             <Reveal delay={0.16}>
-              <p className="mt-6 font-mono text-xs text-navy-400">
+              <p className="mt-6 font-mono text-xs text-navy-300">
                 Will be served at{' '}
                 <span className="text-navy-200">{product.appDomain}</span>
               </p>

@@ -40,7 +40,7 @@ export default function PlatformPage() {
               </p>
             </Reveal>
             <Reveal delay={0.14}>
-              <p className="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-navy-400">
+              <p className="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-navy-300">
                 {company.platformLine}
               </p>
             </Reveal>
@@ -87,7 +87,7 @@ export default function PlatformPage() {
           </div>
 
           <Reveal delay={0.2}>
-            <p className="mt-10 max-w-2xl text-sm leading-relaxed text-navy-400">
+            <p className="mt-10 max-w-2xl text-sm leading-relaxed text-navy-300">
               Both products are in active development and neither is taking
               production orders. The managed services business is what we
               deliver today.

@@ -63,8 +63,14 @@
   }
 
   body {
-    background: var(--color-surface);
-    color: var(--color-ink);
+    /* The site is dark-first: <body> carries bg-navy-950. The inherited text
+       colour must match that, or any element without an explicit colour class
+       renders invisible. This previously defaulted to --color-ink (near-black)
+       against the dark background — a latent trap that only did not bite
+       because every text element set its own colour. Light sections set their
+       own dark text explicitly. */
+    background: var(--color-navy-950);
+    color: var(--color-navy-100);
     font-family: var(--font-sans);
     font-feature-settings: "cv11", "ss01";
     font-variation-settings: "opsz" 32;

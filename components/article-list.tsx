@@ -29,11 +29,11 @@ export function ArticleList({ articles }: { articles: Article[] }) {
               <h3 className="text-pretty font-medium leading-snug text-navy-100 transition-colors group-hover:text-white">
                 {a.title}
               </h3>
-              <time dateTime={a.date} className="mt-1.5 block font-mono text-xs text-navy-500">
+              <time dateTime={a.date} className="mt-1.5 block font-mono text-xs text-navy-300">
                 {formatDate(a.date)}
               </time>
             </div>
-            <ArrowUpRight className="mt-1 size-4 shrink-0 text-navy-500 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-nexus-400" />
+            <ArrowUpRight className="mt-1 size-4 shrink-0 text-navy-300 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-nexus-400" />
           </a>
         </li>
       ))}
@@ -68,7 +68,7 @@ export function CaseStudyCard({ article }: { article: Article }) {
 export function RelatedReading({ articles, title }: { articles: Article[]; title: string }) {
   return (
     <div>
-      <h3 className="font-mono text-xs uppercase tracking-[0.18em] text-navy-400">{title}</h3>
+      <h3 className="font-mono text-xs uppercase tracking-[0.18em] text-navy-300">{title}</h3>
       <ul className="mt-4 space-y-2.5">
         {articles.map((a) => (
           <li key={a.href}>
@@ -76,7 +76,7 @@ export function RelatedReading({ articles, title }: { articles: Article[]; title
               href={a.href}
               className="group flex items-start gap-2 text-sm leading-snug text-navy-300 transition-colors hover:text-white"
             >
-              <ArrowUpRight className="mt-0.5 size-3.5 shrink-0 text-navy-600 transition-colors group-hover:text-guardian-400" />
+              <ArrowUpRight className="mt-0.5 size-3.5 shrink-0 text-navy-400 transition-colors group-hover:text-guardian-400" />
               <span className="text-pretty">{a.title}</span>
             </a>
           </li>
