@@ -1,0 +1,152 @@
+# Publishes the alphalogix.com.au rebuild as a staff-only preview at
+# /web-preview/ inside this hub.
+#
+# Lives in alphalogixaus/alphalogix-tools as
+# .github/workflows/sync-web-preview.yml
+#
+# Why a workflow rather than a local script: Alphalogixau/Marketing is public,
+# so this runner can check it out with no credentials, build it, and commit the
+# output here — without anyone needing a local clone of both repos, and without
+# 1.8MB of build output passing through a chat context.
+#
+# Run it from the Actions tab (Run workflow). It is idempotent, so re-running
+# is how the preview stays current.
+name: Sync web preview
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch or tag of Alphalogixau/Marketing to preview'
+        required: true
+        default: claude/alphalogix-website-redesign-hbkt5j
+  # Uncomment once the rebuild has merged, to keep the preview fresh:
+  # schedule:
+  #   - cron: '0 19 * * *'   # 05:00 Sydney
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-web-preview
+  cancel-in-progress: false
+
+env:
+  BASE_PATH: /web-preview
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this hub
+        uses: actions/checkout@v4
+
+      # Public repository — no token required.
+      - name: Check out the marketing site
+        uses: actions/checkout@v4
+        with:
+          repository: Alphalogixau/Marketing
+          ref: ${{ inputs.ref || 'claude/alphalogix-website-redesign-hbkt5j' }}
+          path: .marketing-src
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: .marketing-src/package-lock.json
+
+      - name: Build with basePath
+        working-directory: .marketing-src
+        env:
+          PREVIEW_BASE_PATH: ${{ env.BASE_PATH }}
+        run: |
+          npm ci
+          npm run build
+
+      # Without this the exported HTML references /_next/* absolutely, which
+      # resolves against the hub root and 404s every asset — the page arrives
+      # unstyled with no JavaScript while the build stays green.
+      - name: Verify the build serves from the base path
+        working-directory: .marketing-src
+        env:
+          PREVIEW_BASE_PATH: ${{ env.BASE_PATH }}
+        run: |
+          npx playwright install --with-deps chromium
+          npm run verify:preview
+
+      - name: Copy the build into the hub
+        run: |
+          set -euo pipefail
+          DEST=".${BASE_PATH}"
+          rm -rf "$DEST"
+          mkdir -p "$DEST"
+          cp -R .marketing-src/out/. "$DEST/"
+          echo "copied $(find "$DEST" -type f | wc -l) files"
+
+      - name: Patch staticwebapp.config.json
+        run: |
+          python3 - "$BASE_PATH" <<'PY'
+          import json, sys, pathlib
+          base = sys.argv[1]
+          p = pathlib.Path('staticwebapp.config.json')
+          cfg = json.loads(p.read_text(encoding='utf-8'))
+          pattern = f'{base}/*'
+          ex = cfg.setdefault('navigationFallback', {}).setdefault('exclude', [])
+          if pattern in ex:
+              print(f'exclude already contains {pattern}')
+          else:
+              ex.append(pattern)
+              p.write_text(json.dumps(cfg, indent=2) + '\n', encoding='utf-8')
+              print(f'added {pattern} to navigationFallback.exclude')
+          PY
+
+      - name: Insert the hub tool card
+        run: |
+          python3 - "$BASE_PATH" <<'PY'
+          import sys, pathlib, re
+          base = sys.argv[1]
+          index = pathlib.Path('index.html')
+          html = index.read_text(encoding='utf-8')
+          marker = 'data-alphalogix-web-preview'
+          if marker in html:
+              print('card already present'); raise SystemExit(0)
+          snippet = pathlib.Path('.marketing-src/docs/tools-hub-card.html').read_text(encoding='utf-8')
+          card = re.sub(r'(?s)^.*?(<a class="tool")', r'\1', snippet).strip()
+          card = card.replace('href="#SET-DESTINATION-SEE-COMMENT-ABOVE"', f'href="{base}/"')
+          card = card.replace('<a class="tool"', f'<a class="tool" {marker}', 1)
+          card = card.replace(
+              '<span class="host">Alphalogixau/Marketing &middot; PR #3</span>',
+              f'<span class="host">{base}/</span>')
+          # After the first existing card, so the hub's own featured tool keeps
+          # top position and each comment stays above the card it introduces.
+          m = re.search(r'([ \t]*)<a class="tool', html)
+          if not m:
+              print('ERROR: no existing tool card found', file=sys.stderr); raise SystemExit(1)
+          indent = m.group(1)
+          c = re.compile(r'\n' + re.escape(indent) + r'</a>').search(html, m.end())
+          if not c:
+              print('ERROR: could not find the end of the first card', file=sys.stderr); raise SystemExit(1)
+          block = '\n'.join(indent + l if l.strip() else l for l in card.split('\n'))
+          index.write_text(html[:c.end()] + '\n\n' + block + html[c.end():], encoding='utf-8')
+          print('card inserted')
+          PY
+
+      - name: Commit
+        env:
+          SRC_REF: ${{ inputs.ref || 'claude/alphalogix-website-redesign-hbkt5j' }}
+        run: |
+          set -euo pipefail
+          rm -rf .marketing-src
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add ".${BASE_PATH}" staticwebapp.config.json index.html
+          if git diff --cached --quiet; then
+            echo 'preview already up to date — nothing to commit'
+            exit 0
+          fi
+          printf '%s\n\n%s\n' \
+            "chore: sync web preview from Marketing@${SRC_REF}" \
+            "Built with PREVIEW_BASE_PATH=${BASE_PATH} and verified to serve from that sub-path before copying. Staff-only: staticwebapp.config.json routes /* to authenticated." \
+            > /tmp/preview-commit-msg
+          git commit -F /tmp/preview-commit-msg
+          git push
