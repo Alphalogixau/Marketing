@@ -51,11 +51,11 @@ export default function HomePage() {
 
             <Reveal delay={0.16}>
               <p className="mt-7 max-w-xl text-pretty text-[length:var(--text-lead)] leading-relaxed text-navy-200">
-                We run managed IT, cyber security, cloud and surveillance for
-                Australian businesses. Then we build the software our own
-                engineers needed and could not buy — private edge video
-                intelligence, and a portal that shows customers what they
-                actually have.
+                We are building two products — private edge video
+                intelligence that runs at your site, and a portal that shows
+                you every site you have with us. Behind them sits the managed
+                IT, cyber security, cloud and surveillance practice that
+                installs and runs them.
               </p>
             </Reveal>
 
@@ -95,13 +95,18 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <h2 className="max-w-2xl text-balance text-[length:var(--text-h2)] font-semibold tracking-tight text-white">
-              Two products and a service business that funds them.
+              Two products, and the field capability to actually deploy them.
             </h2>
             <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-navy-300">
-              We are honest about where each one stands. The services are
-              running today. The products are in development, and we would
-              rather tell you that than show you a screenshot of something that
-              does not exist yet.
+              Guardian is not a download. It is an appliance that has to be
+              racked, networked, firewalled, monitored and maintained at your
+              site. Nexus only knows your estate is healthy because engineers
+              are already monitoring it. A software company selling either one
+              would have to go and find that capability. We started with it.
+            </p>
+            <p className="mt-4 max-w-2xl text-pretty leading-relaxed text-navy-400">
+              Both products are in development, and we would rather say so than
+              show you a screenshot of something that does not exist yet.
             </p>
           </Reveal>
 
@@ -134,10 +139,10 @@ export default function HomePage() {
               <PillarCard
                 icon={<Headphones className="size-5" />}
                 accent="msp"
-                eyebrow="We run it."
+                eyebrow="Our engineers deploy and run it."
                 title="Managed Services"
-                body="The business that pays for all of this."
-                detail="Managed IT, cyber security, cloud, unified communications, surveillance and consulting."
+                body="What makes the products deliverable."
+                detail="Managed IT, cyber security, cloud, unified communications, surveillance and consulting — the same teams that will install and maintain your Guardian nodes."
                 status="Available now"
                 href="/service/managed-services/"
                 external
@@ -343,8 +348,9 @@ export default function HomePage() {
               One partner for the whole estate.
             </h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-navy-300">
-              The services business is what we do today, for businesses across
-              every Australian state.
+              The practice that delivers the platform is also a complete
+              managed IT service in its own right — available today, for
+              businesses across every Australian state.
             </p>
           </Reveal>
 
