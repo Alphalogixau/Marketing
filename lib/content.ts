@@ -302,3 +302,96 @@ export const industries = [
 ] as const
 
 export const officeAddress = 'Suite 104, 235 Clarence Street, Sydney NSW 2000' as const
+
+/* ── Editorial: blog posts and case studies ────────────────────────────────
+ * All URLs and dates taken from https://alphalogix.com.au/post-sitemap.xml —
+ * the authoritative list. Titles are the published headlines.
+ *
+ * These live on WordPress and are untouched by this app. They are surfaced
+ * here because the landing page is the homepage, and the homepage is the
+ * primary internal link source for this content. The previous Elementor
+ * homepage carried Blog and Case Study sections; dropping them would cut
+ * internal linking to the only genuinely rankable content the business has. */
+
+export interface Article {
+  title: string
+  href: string
+  /** Published date from the sitemap, ISO. */
+  date: string
+  /** Rough subject, used to group. 'surveillance' posts are Guardian's market. */
+  topic: 'surveillance' | 'security' | 'operations' | 'build'
+}
+
+export const posts: Article[] = [
+  {
+    title: 'We Just Helped a Client Recover From a Hack. Here’s What We Found Hiding in Their Inbox.',
+    href: '/blog/phishing-attack-hidden-outlook-rule-small-business/',
+    date: '2026-07-28',
+    topic: 'security',
+  },
+  {
+    title: 'We Have Zero Coding Experience. Here’s How We Built Two Working Business Tools With AI.',
+    href: '/blog/building-internal-business-tools-with-ai-no-code/',
+    date: '2026-07-21',
+    topic: 'build',
+  },
+  {
+    title: 'The Law Is Changing Fast on Retail Crime in Australia. So Is Public Attitude.',
+    href: '/blog/retail-crime-laws-culture-shift-australia/',
+    date: '2026-07-19',
+    topic: 'surveillance',
+  },
+  {
+    title: 'Retail Theft in Australia Just Hit a 21-Year High. Here’s What the Numbers Actually Mean.',
+    href: '/blog/retail-theft-australia-surveillance-evaluation-guide/',
+    date: '2026-07-15',
+    topic: 'surveillance',
+  },
+  {
+    title: 'Windows 365 Cloud PC Setup: A Complete Provisioning Walkthrough',
+    href: '/blog/windows-365-cloud-pc-provisioning-setup-australia/',
+    date: '2026-07-14',
+    topic: 'operations',
+  },
+  {
+    title: 'The First 10 Minutes of a Network Outage — What a Good IT Partner Actually Does',
+    href: '/blog/network-outage-response-first-10-minutes/',
+    date: '2026-07-05',
+    topic: 'operations',
+  },
+  {
+    title: 'The Confrontation Is the Incident. Here’s What AI Surveillance Actually Changes.',
+    href: '/blog/retail-security-ai-surveillance-confrontation-australia/',
+    date: '2026-07-02',
+    topic: 'surveillance',
+  },
+  {
+    title: 'Why Every Shared Office Should Segment Its Network — VLANs, Explained',
+    href: '/blog/office-network-segmentation-vlans/',
+    date: '2026-07-01',
+    topic: 'operations',
+  },
+  {
+    title: 'AI Hazard Detection for Retail & Shopping Centres',
+    href: '/blog/ai-hazard-detection-shopping-centres-australia/',
+    date: '2026-06-23',
+    topic: 'surveillance',
+  },
+]
+
+export const caseStudies: Article[] = [
+  {
+    title:
+      'Three Companies, One Office, One Network — How We Built (and Fixed) a Multi-Tenant Network in Sydney',
+    href: '/case-study/multi-tenant-network-build-sydney-suite-1202/',
+    date: '2026-06-29',
+    topic: 'operations',
+  },
+]
+
+/** Posts about retail crime and AI surveillance in Australia — Guardian's
+ *  exact market. Four of nine posts already sit in it. */
+export const surveillancePosts = posts.filter((p) => p.topic === 'surveillance')
+
+/** Newest first, for the landing page. */
+export const latestPosts = [...posts].sort((a, b) => b.date.localeCompare(a.date))

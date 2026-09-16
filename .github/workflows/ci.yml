@@ -157,6 +157,31 @@ jobs:
             fail=1
           fi
 
+          # Blog and case studies must stay linked from the landing page.
+          # The previous Elementor homepage carried both; a first pass of this
+          # rebuild dropped them, cutting internal links to the only genuinely
+          # rankable content the business has.
+          if ! grep -qF '/blog/' out/index.html; then
+            echo "::error::landing page no longer links the blog index"
+            fail=1
+          fi
+          if ! grep -qF '/case-study/' out/index.html; then
+            echo "::error::landing page no longer links the case study index"
+            fail=1
+          fi
+          # At least four individual articles, so the homepage stays a real
+          # internal link source rather than just pointing at two indexes.
+          article_links=$(grep -oE '/(blog|case-study)/[a-z0-9-]{10,}/' out/index.html | sort -u | wc -l)
+          if [ "$article_links" -lt 4 ]; then
+            echo "::error::only $article_links individual article links on the landing page; expected at least 4"
+            fail=1
+          fi
+          # The case study itself — the strongest proof asset for a services buyer.
+          if ! grep -qF '/case-study/multi-tenant-network-build-sydney-suite-1202/' out/index.html; then
+            echo "::error::the case study is no longer linked from the landing page"
+            fail=1
+          fi
+
           # Any external link that opens a new tab needs rel=noopener.
           if grep -oE '<a[^>]*target="_blank"[^>]*>' out/index.html | grep -v 'noopener'; then
             echo "::error::a target=\"_blank\" link is missing rel=noopener"

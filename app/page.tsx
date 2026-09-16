@@ -4,6 +4,11 @@ import { Reveal } from '@/components/reveal'
 import { TopologyVisual } from '@/components/topology-visual'
 import { IncidentPipeline } from '@/components/incident-pipeline'
 import { ResilienceVisual } from '@/components/resilience-visual'
+import {
+  ArticleList,
+  CaseStudyCard,
+  RelatedReading,
+} from '@/components/article-list'
 import { NationalPresence } from '@/components/national-presence'
 import {
   getProduct,
@@ -13,6 +18,9 @@ import {
   surveillancePartners,
   cloudPartners,
   industries,
+  latestPosts,
+  caseStudies,
+  surveillancePosts,
 } from '@/lib/content'
 import { contact } from '@/lib/contact'
 
@@ -199,6 +207,15 @@ export default function HomePage() {
                   How Guardian works
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
+              </Reveal>
+
+              <Reveal delay={0.22}>
+                <div className="mt-10 border-t border-white/10 pt-8">
+                  <RelatedReading
+                    title="On this, from our field notes"
+                    articles={surveillancePosts}
+                  />
+                </div>
               </Reveal>
             </div>
 
@@ -447,6 +464,52 @@ export default function HomePage() {
               </a>
             </p>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ──────────── Insights and case studies ────────────
+          The previous Elementor homepage carried Blog and Case Study
+          sections. Restoring them: the homepage is the primary internal link
+          source for this content, and it is the only genuinely rankable
+          material the business has. See docs/SEO-CONTINUITY.md */}
+      <section className="border-t border-white/10 bg-navy-950 py-24 sm:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <h2 className="max-w-2xl text-balance text-[length:var(--text-h2)] font-semibold tracking-tight text-white">
+              What we have actually seen.
+            </h2>
+            <p className="mt-4 max-w-2xl leading-relaxed text-navy-300">
+              Field notes from real jobs — the hack we unpicked, the outage
+              playbook, and what the Australian retail crime numbers actually
+              mean.
+            </p>
+          </Reveal>
+
+          <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-14">
+            <Reveal>
+              <CaseStudyCard article={caseStudies[0]} />
+            </Reveal>
+
+            <Reveal delay={0.08}>
+              <ArticleList articles={latestPosts.slice(0, 6)} />
+              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
+                <a
+                  href={wpRoutes.blog}
+                  className="group inline-flex items-center gap-2 text-sm font-semibold text-nexus-400"
+                >
+                  All articles
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                </a>
+                <a
+                  href={wpRoutes.caseStudies}
+                  className="group inline-flex items-center gap-2 text-sm font-semibold text-msp-400"
+                >
+                  All case studies
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                </a>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
