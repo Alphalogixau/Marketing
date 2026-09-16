@@ -1,5 +1,16 @@
+/**
+ * PREVIEW_BASE_PATH builds the same site to be served from a sub-path rather
+ * than the domain root. It exists for the staff preview copied into
+ * alphalogix-tools at /web-preview/ — without it the absolute /_next/* asset
+ * paths resolve against the hub root and every asset 404s.
+ *
+ * Normal builds leave it unset and serve from "/".
+ */
+const basePath = process.env.PREVIEW_BASE_PATH || undefined
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  ...(basePath ? { basePath, assetPrefix: basePath } : {}),
   // Static export -> /out, matching the Azure Static Web Apps workflow in .github/workflows
   output: 'export',
   // Serves "/" (landing page) and "/platform/*" (product pages).
