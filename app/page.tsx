@@ -3,6 +3,8 @@ import { ArrowRight, Check, ShieldCheck, Layers, Headphones } from 'lucide-react
 import { Reveal } from '@/components/reveal'
 import { TopologyVisual } from '@/components/topology-visual'
 import { IncidentPipeline } from '@/components/incident-pipeline'
+import { ResilienceVisual } from '@/components/resilience-visual'
+import { NationalPresence } from '@/components/national-presence'
 import {
   getProduct,
   services,
@@ -12,6 +14,7 @@ import {
   cloudPartners,
   industries,
 } from '@/lib/content'
+import { contact } from '@/lib/contact'
 
 const guardian = getProduct('guardian')!
 const nexus = getProduct('nexus')!
@@ -216,6 +219,39 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ──────────── Resilience ────────────
+          Guardian's strongest and least copyable claim, animated. */}
+      <section className="border-t border-white/10 bg-navy-900 py-24 sm:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+            <Reveal>
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-guardian-400">
+                Built for sites, not data centres
+              </p>
+              <h2 className="mt-4 text-balance text-[length:var(--text-h2)] font-semibold tracking-tight text-white">
+                It keeps working when the internet does not.
+              </h2>
+              <div className="mt-6 space-y-4 text-pretty leading-relaxed text-navy-300">
+                <p>
+                  Guardian runs on a node at your premises. Detection,
+                  tracking, rules, incident qualification and evidence all
+                  happen there — not in a region that might be having a bad day.
+                </p>
+                <p className="text-navy-200">
+                  When the link to the portal drops, nothing stops and nothing
+                  is lost, because nothing depended on the link. Video is
+                  processed locally by default and leaves site only under a
+                  policy you set.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <ResilienceVisual />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* ───────────────────────── Nexus ───────────────────────── */}
       <section className="border-y border-white/10 bg-navy-900 py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -370,6 +406,47 @@ export default function HomePage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ──────────── National presence ────────────
+          Eight states, eight tel: links. This was buried in a footer on the
+          old site; it is a genuine differentiator for a buyer with sites in
+          more than one state. */}
+      <section className="border-t border-white/10 bg-navy-900 py-24 sm:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <h2 className="max-w-2xl text-balance text-[length:var(--text-h2)] font-semibold tracking-tight text-white">
+              Someone to call in every state.
+            </h2>
+            <p className="mt-4 max-w-2xl leading-relaxed text-navy-300">
+              Multi-site estates do not respect state borders. Neither do we —
+              tap your state and you get our team there.
+            </p>
+          </Reveal>
+          <div className="mt-12">
+            <NationalPresence />
+          </div>
+          <Reveal delay={0.1}>
+            <p className="mt-8 text-sm text-navy-400">
+              Head office:{' '}
+              <a
+                href={contact.addressHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-navy-200 underline decoration-navy-600 underline-offset-4 transition-colors hover:text-white"
+              >
+                {contact.address}
+              </a>
+              {' · '}
+              <a
+                href={contact.emailHref}
+                className="text-navy-200 underline decoration-navy-600 underline-offset-4 transition-colors hover:text-white"
+              >
+                {contact.email}
+              </a>
+            </p>
+          </Reveal>
         </div>
       </section>
 

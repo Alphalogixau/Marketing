@@ -111,3 +111,56 @@ jobs:
           fi
 
           exit $fail
+
+      - name: Verify hyperlink integrity
+        run: |
+          set -euo pipefail
+          # Every contact route must survive a refactor. These are the links a
+          # customer actually uses to reach the business, and a silent
+          # regression here costs real calls.
+          fail=0
+
+          # All eight state offices, as tel: links.
+          for t in \
+            +61280436550 +61261852828 +61399700568 +61362131978 \
+            +61735432188 +61879428858 +61871181976 +61862851628
+          do
+            if ! grep -q "tel:$t" out/index.html; then
+              echo "::error::missing tel: link for $t — see lib/contact.ts"
+              fail=1
+            fi
+          done
+
+          # Email, socials and the Nexus portal.
+          for needle in \
+            'mailto:Bookings@alphalogix.com.au' \
+            'linkedin.com/company/alphalogixaus' \
+            'instagram.com/alphalogixaus' \
+            'x.com/alphalogixaus' \
+            'nexus.alphalogix.com.au'
+          do
+            if ! grep -qF "$needle" out/index.html; then
+              echo "::error::missing link: $needle — see lib/contact.ts"
+              fail=1
+            fi
+          done
+
+          # The official wordmark is inlined (see components/logo.tsx for why),
+          # so assert its rendered markup is present rather than a file request.
+          if ! grep -qF 'aria-label="Alphalogix"' out/index.html; then
+            echo "::error::the official wordmark is no longer rendered on the landing page"
+            fail=1
+          fi
+          # The verbatim original must stay in the repo as the source of record.
+          if [ ! -f public/brand/alphalogix-logo.svg ]; then
+            echo "::error::public/brand/alphalogix-logo.svg (the original brand asset) is missing"
+            fail=1
+          fi
+
+          # Any external link that opens a new tab needs rel=noopener.
+          if grep -oE '<a[^>]*target="_blank"[^>]*>' out/index.html | grep -v 'noopener'; then
+            echo "::error::a target=\"_blank\" link is missing rel=noopener"
+            fail=1
+          fi
+
+          exit $fail

@@ -258,14 +258,9 @@ export const incidentLifecycle: LifecycleStage[] = [
   },
 ]
 
-/** WordPress-served pages referenced from the new surfaces. */
-export const wpRoutes = {
-  about: '/about-us/',
-  contact: '/contact-us/',
-  caseStudies: '/case-study/',
-  blog: '/blog/',
-  privacy: '/privacy-policy/',
-} as const
+/** Re-exported so existing imports keep working. Defined in lib/contact.ts,
+ *  which is the single source of truth for every link on the site. */
+export { wpRoutes } from './contact'
 
 export const company = {
   name: 'Alphalogix',

@@ -5,7 +5,9 @@ import Link from 'next/link'
 import { AnimatePresence, motion } from 'motion/react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { services, wpRoutes } from '@/lib/content'
+import { services } from '@/lib/content'
+import { wpRoutes, hq } from '@/lib/contact'
+import { Wordmark } from '@/components/logo'
 
 const platformItems = [
   {
@@ -56,11 +58,8 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="shrink-0 text-lg font-semibold tracking-tight text-white"
-        >
-          Alpha<span className="text-nexus-400">logix</span>
+        <Link href="/" className="shrink-0 text-white" aria-label="Alphalogix home">
+          <Wordmark className="h-6 w-auto" />
         </Link>
 
         {/* Desktop nav */}
@@ -124,6 +123,12 @@ export function SiteHeader() {
 
         <div className="ml-auto hidden items-center gap-3 lg:flex">
           <a
+            href={`tel:${hq.tel}`}
+            className="rounded-full px-3 py-2 text-sm font-medium tabular-nums text-navy-200 transition-colors hover:text-white"
+          >
+            {hq.phone}
+          </a>
+          <a
             href={wpRoutes.contact}
             className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-navy-900 transition-transform hover:scale-[1.03] active:scale-100"
           >
@@ -166,6 +171,12 @@ export function SiteHeader() {
                   </a>
                 ))}
               </MobileGroup>
+              <a
+                href={`tel:${hq.tel}`}
+                className="block rounded-full border border-white/20 px-4 py-3 text-center text-sm font-semibold tabular-nums text-white"
+              >
+                Call {hq.phone}
+              </a>
               <a
                 href={wpRoutes.contact}
                 className="block rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-navy-900"
