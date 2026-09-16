@@ -1,0 +1,113 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Validates the application itself. The Azure Static Web Apps workflows in
+# this directory only deploy — they never checked that the code compiles, so
+# a broken build would have reached the deploy step before anyone noticed.
+jobs:
+  build:
+    name: Typecheck and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify static export produced the expected routes
+        run: |
+          set -euo pipefail
+          missing=0
+          for f in \
+            out/index.html \
+            out/platform/index.html \
+            out/platform/guardian/index.html \
+            out/platform/nexus/index.html
+          do
+            if [ ! -f "$f" ]; then
+              echo "::error::missing expected output: $f"
+              missing=1
+            fi
+          done
+          exit $missing
+
+      - name: Verify SEO continuity
+        run: |
+          set -euo pipefail
+          # The six WordPress service URLs must stay linked from the landing
+          # page. They are the only pages currently earning organic traffic and
+          # the landing page is their primary internal link source.
+          # See docs/SEO-CONTINUITY.md
+          fail=0
+          for slug in \
+            managed-services \
+            cyber-security-services \
+            surveillance-integration \
+            cloud-services \
+            unified-communication-services \
+            consulting-services
+          do
+            if ! grep -q "/service/$slug/" out/index.html; then
+              echo "::error::landing page no longer links to /service/$slug/ — see docs/SEO-CONTINUITY.md"
+              fail=1
+            fi
+          done
+          # The title phrase this domain has been ranking for since 2022.
+          if ! grep -q "Managed IT Services Australia" out/index.html; then
+            echo "::error::landing page lost the 'Managed IT Services Australia' title phrase"
+            fail=1
+          fi
+          exit $fail
+
+      - name: Verify marketing guardrails
+        run: |
+          set -euo pipefail
+          # Guardian's ADRs forbid quantitative claims that no benchmark
+          # supports (ADR-0008 capacity, and latency/accuracy generally), and
+          # require that recognition be absent from the product, not merely
+          # disabled. See docs/MARKETING_GUARDRAILS.md
+          #
+          # Note: we deliberately do NOT grep for the words "watchlist" or
+          # "facial recognition" on their own. The Guardian page says
+          # "No facial recognition, LPR, watchlists or appearance search" —
+          # naming what the product excludes is the point, so a bare keyword
+          # match would fail on correct copy.
+          fail=0
+
+          # 1. Unmeasured quantitative claims.
+          if grep -rEioq '[0-9]+(\.[0-9]+)? ?% ?(accurate|accuracy|uptime|detection|precision|recall)' out --include='*.html'; then
+            echo "::error::an accuracy/uptime percentage appears on the site. No validated figure exists — see docs/MARKETING_GUARDRAILS.md"
+            fail=1
+          fi
+          if grep -rEioq '[0-9]+\+? (cameras|streams|channels) per' out --include='*.html'; then
+            echo "::error::a per-node capacity claim appears on the site. ADR-0008 forbids this until tests/performance produces a profile"
+            fail=1
+          fi
+          if grep -rEioq '(sub-|under |less than |within )[0-9]+ ?(second|sec|ms|millisecond)' out --include='*.html'; then
+            echo "::error::a latency claim appears on the site. No latency SLO exists until the benchmark does"
+            fail=1
+          fi
+
+          # 2. The recognition exclusion must remain stated on the Guardian page.
+          if ! grep -Fq 'No facial recognition' out/platform/guardian/index.html; then
+            echo "::error::the Guardian page no longer states that it ships no facial recognition — see docs/MARKETING_GUARDRAILS.md"
+            fail=1
+          fi
+
+          exit $fail
