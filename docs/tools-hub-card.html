@@ -1,0 +1,45 @@
+<!--
+  Tool card for the alphalogix-tools hub (alphalogixaus/alphalogix-tools).
+
+  Paste into index.html alongside the existing cards. The markup matches the
+  hub's own structure exactly: a.tool > span.new-badge + div.icon > svg +
+  h3 + p.tagline + div.foot > span.host + span.cta-btn-big.
+
+  HREF IS DELIBERATELY UNSET — see docs/ROUTING.md and the note below.
+  The Marketing repo's Azure Static Web App is not deploying, so there is no
+  preview URL yet. Do not point this at a guessed hostname.
+
+  Two ways to give it a destination:
+
+  1. RECOMMENDED — create a Static Web App for the Marketing repo and use its
+     hostname. Azure then also builds a preview environment per pull request,
+     so the card can point at the live PR preview. Your tools SWA already
+     proves the Azure side works: tools.alphalogix.com.au returns 302 to
+     /.auth/login/aad exactly as its staticwebapp.config.json specifies.
+
+  2. Copy this repo's built `out/` into alphalogix-tools under /web-preview/
+     and set href="/web-preview/". If you do this, note three things:
+       - rebuild with basePath and assetPrefix set to '/web-preview', or the
+         absolute /_next/* asset paths will 404
+       - add "/web-preview/*" to navigationFallback.exclude in
+         staticwebapp.config.json, or deep links fall through to the hub's
+         index.html
+       - the copy goes stale on every Marketing push unless it is re-synced
+-->
+<a class="tool" href="#SET-DESTINATION-SEE-COMMENT-ABOVE">
+  <span class="new-badge">New</span>
+  <div class="icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="16" rx="2"/>
+      <path d="M3 9h18"/>
+      <path d="M8 14h5"/>
+      <path d="M8 17h8"/>
+    </svg>
+  </div>
+  <h3>Website Rebuild</h3>
+  <p class="tagline">Preview the new alphalogix.com.au landing page and the Guardian and Nexus platform pages while they are in development. Scroll-driven incident pipeline, WAN-interruption animation, and every state contact wired as a tel: link.</p>
+  <div class="foot">
+    <span class="host">Alphalogixau/Marketing &middot; PR #3</span>
+    <span class="cta-btn-big">View preview &rarr;</span>
+  </div>
+</a>

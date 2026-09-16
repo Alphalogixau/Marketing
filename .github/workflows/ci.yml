@@ -1,0 +1,215 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Validates the application itself. The Azure Static Web Apps workflows in
+# this directory only deploy — they never checked that the code compiles, so
+# a broken build would have reached the deploy step before anyone noticed.
+jobs:
+  build:
+    name: Typecheck and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify static export produced the expected routes
+        run: |
+          set -euo pipefail
+          missing=0
+          for f in \
+            out/index.html \
+            out/platform/index.html \
+            out/platform/guardian/index.html \
+            out/platform/nexus/index.html
+          do
+            if [ ! -f "$f" ]; then
+              echo "::error::missing expected output: $f"
+              missing=1
+            fi
+          done
+          exit $missing
+
+      - name: Verify SEO continuity
+        run: |
+          set -euo pipefail
+          # The six WordPress service URLs must stay linked from the landing
+          # page. They are the only pages currently earning organic traffic and
+          # the landing page is their primary internal link source.
+          # See docs/SEO-CONTINUITY.md
+          fail=0
+          for slug in \
+            managed-services \
+            cyber-security-services \
+            surveillance-integration \
+            cloud-services \
+            unified-communication-services \
+            consulting-services
+          do
+            if ! grep -q "/service/$slug/" out/index.html; then
+              echo "::error::landing page no longer links to /service/$slug/ — see docs/SEO-CONTINUITY.md"
+              fail=1
+            fi
+          done
+          # The title phrase this domain has been ranking for since 2022.
+          if ! grep -q "Managed IT Services Australia" out/index.html; then
+            echo "::error::landing page lost the 'Managed IT Services Australia' title phrase"
+            fail=1
+          fi
+          exit $fail
+
+      - name: Verify marketing guardrails
+        run: |
+          set -euo pipefail
+          # Guardian's ADRs forbid quantitative claims that no benchmark
+          # supports (ADR-0008 capacity, and latency/accuracy generally), and
+          # require that recognition be absent from the product, not merely
+          # disabled. See docs/MARKETING_GUARDRAILS.md
+          #
+          # Note: we deliberately do NOT grep for the words "watchlist" or
+          # "facial recognition" on their own. The Guardian page says
+          # "No facial recognition, LPR, watchlists or appearance search" —
+          # naming what the product excludes is the point, so a bare keyword
+          # match would fail on correct copy.
+          fail=0
+
+          # 1. Unmeasured quantitative claims.
+          if grep -rEioq '[0-9]+(\.[0-9]+)? ?% ?(accurate|accuracy|uptime|detection|precision|recall)' out --include='*.html'; then
+            echo "::error::an accuracy/uptime percentage appears on the site. No validated figure exists — see docs/MARKETING_GUARDRAILS.md"
+            fail=1
+          fi
+          if grep -rEioq '[0-9]+\+? (cameras|streams|channels) per' out --include='*.html'; then
+            echo "::error::a per-node capacity claim appears on the site. ADR-0008 forbids this until tests/performance produces a profile"
+            fail=1
+          fi
+          if grep -rEioq '(sub-|under |less than |within )[0-9]+ ?(second|sec|ms|millisecond)' out --include='*.html'; then
+            echo "::error::a latency claim appears on the site. No latency SLO exists until the benchmark does"
+            fail=1
+          fi
+
+          # 2. The retired product name must never reappear. "Nexus Guardian"
+          #    was Guardian's previous name; prefixing it implies Guardian is a
+          #    module of Nexus, which ADR-0001 exists to deny.
+          # -z so a line-wrapped occurrence cannot slip through; verified by
+          # negative control that the pattern both fires on "Nexus Guardian"
+          # and stays clean against correct copy.
+          if grep -rEizq 'nexus[[:space:]]+guardian' out --include='*.html'; then
+            echo "::error::the retired name 'Nexus Guardian' appears in the output — the product is Guardian. See docs/MARKETING_GUARDRAILS.md"
+            fail=1
+          fi
+
+          # 3. The recognition exclusion must remain stated on the Guardian page.
+          if ! grep -Fq 'No facial recognition' out/platform/guardian/index.html; then
+            echo "::error::the Guardian page no longer states that it ships no facial recognition — see docs/MARKETING_GUARDRAILS.md"
+            fail=1
+          fi
+
+          exit $fail
+
+      - name: Verify hyperlink integrity
+        run: |
+          set -euo pipefail
+          # Every contact route must survive a refactor. These are the links a
+          # customer actually uses to reach the business, and a silent
+          # regression here costs real calls.
+          fail=0
+
+          # All eight state offices, as tel: links.
+          for t in \
+            +61280436550 +61261852828 +61399700568 +61362131978 \
+            +61735432188 +61879428858 +61871181976 +61862851628
+          do
+            if ! grep -q "tel:$t" out/index.html; then
+              echo "::error::missing tel: link for $t — see lib/contact.ts"
+              fail=1
+            fi
+          done
+
+          # Email, socials and the Nexus portal.
+          for needle in \
+            'mailto:Bookings@alphalogix.com.au' \
+            'linkedin.com/company/alphalogixaus' \
+            'instagram.com/alphalogixaus' \
+            'x.com/alphalogixaus' \
+            'nexus.alphalogix.com.au' \
+            'alphalogix.rmmservice.com.au'
+          do
+            if ! grep -qF "$needle" out/index.html; then
+              echo "::error::missing link: $needle — see lib/contact.ts"
+              fail=1
+            fi
+          done
+
+          # The official wordmark must be referenced AND actually emitted.
+          # A referenced-but-missing logo leaves a broken image with a green build.
+          if ! grep -qF '/brand/alphalogix-horizontal-white.png' out/index.html; then
+            echo "::error::the landing page no longer references the official wordmark"
+            fail=1
+          fi
+          if ! grep -qF 'alt="Alphalogix"' out/index.html; then
+            echo "::error::the wordmark lost its alt text"
+            fail=1
+          fi
+          if [ ! -f out/brand/alphalogix-horizontal-white.png ]; then
+            echo "::error::the wordmark is referenced but was not emitted into out/"
+            fail=1
+          fi
+
+          # Blog and case studies must stay linked from the landing page.
+          # The previous Elementor homepage carried both; a first pass of this
+          # rebuild dropped them, cutting internal links to the only genuinely
+          # rankable content the business has.
+          if ! grep -qF '/blog/' out/index.html; then
+            echo "::error::landing page no longer links the blog index"
+            fail=1
+          fi
+          if ! grep -qF '/case-study/' out/index.html; then
+            echo "::error::landing page no longer links the case study index"
+            fail=1
+          fi
+          # At least four individual articles, so the homepage stays a real
+          # internal link source rather than just pointing at two indexes.
+          article_links=$(grep -oE '/(blog|case-study)/[a-z0-9-]{10,}/' out/index.html | sort -u | wc -l)
+          if [ "$article_links" -lt 4 ]; then
+            echo "::error::only $article_links individual article links on the landing page; expected at least 4"
+            fail=1
+          fi
+          # The case study itself — the strongest proof asset for a services buyer.
+          if ! grep -qF '/case-study/multi-tenant-network-build-sydney-suite-1202/' out/index.html; then
+            echo "::error::the case study is no longer linked from the landing page"
+            fail=1
+          fi
+
+          # Any external link that opens a new tab needs rel=noopener.
+          if grep -oE '<a[^>]*target="_blank"[^>]*>' out/index.html | grep -v 'noopener'; then
+            echo "::error::a target=\"_blank\" link is missing rel=noopener"
+            fail=1
+          fi
+
+          exit $fail
+
+      # Static greps and typecheck cannot see what the page actually looks
+      # like. A retint pass once shipped an <h2> in navy-900 on a navy-900
+      # section — contrast 1:1, invisible, with a fully green build.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Render check (overflow, console errors, WCAG AA contrast)
+        run: npm run check:render
