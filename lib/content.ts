@@ -66,9 +66,10 @@ export const services = [
 export type Service = (typeof services)[number]
 
 /* ── Platform ──────────────────────────────────────────────────────────────
- * Naming follows alphalogix-guardian ADR-0001: Guardian is a PEER of Nexus,
- * not "Nexus Guardian". alphalogix-atlantis/README.md currently contradicts
- * this. Flagged in docs/OPEN-QUESTIONS.md — resolve before launch. */
+ * Naming follows alphalogix-guardian ADR-0001: Guardian is a PEER of Nexus.
+ * "Nexus Guardian" was the product's previous name and is retired — do not
+ * reintroduce it. Confirmed 16 Sep 2026; see docs/OPEN-QUESTIONS.md. The
+ * stale name still appears in alphalogix-atlantis/README.md; ignore it. */
 
 export type ProductStatus = 'in-development' | 'private-beta' | 'available'
 

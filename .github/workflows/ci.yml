@@ -104,7 +104,18 @@ jobs:
             fail=1
           fi
 
-          # 2. The recognition exclusion must remain stated on the Guardian page.
+          # 2. The retired product name must never reappear. "Nexus Guardian"
+          #    was Guardian's previous name; prefixing it implies Guardian is a
+          #    module of Nexus, which ADR-0001 exists to deny.
+          # -z so a line-wrapped occurrence cannot slip through; verified by
+          # negative control that the pattern both fires on "Nexus Guardian"
+          # and stays clean against correct copy.
+          if grep -rEizq 'nexus[[:space:]]+guardian' out --include='*.html'; then
+            echo "::error::the retired name 'Nexus Guardian' appears in the output — the product is Guardian. See docs/MARKETING_GUARDRAILS.md"
+            fail=1
+          fi
+
+          # 3. The recognition exclusion must remain stated on the Guardian page.
           if ! grep -Fq 'No facial recognition' out/platform/guardian/index.html; then
             echo "::error::the Guardian page no longer states that it ships no facial recognition — see docs/MARKETING_GUARDRAILS.md"
             fail=1

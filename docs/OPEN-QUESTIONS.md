@@ -1,29 +1,35 @@
-# Open questions blocking launch
+# Open questions
+
+Resolved items are kept with their decision and date rather than deleted.
 
 Raised from reading the product repositories. Each needs a decision from
 Alphalogix, not a guess from a contributor.
 
-## 1. Is Guardian a peer of Nexus, or a module of it? ⚠️ BLOCKING
+## 1. Guardian vs "Nexus Guardian" — ✅ RESOLVED 16 Sep 2026
 
-Two repositories state this differently, in writing:
+**Decision (Peter Su):** *"Guardian is new and what we have developed. Nexus
+Guardian was the previous name."*
 
-- `alphalogix-guardian/README.md`:
-  > "**Guardian sees. Nexus orchestrates. Sage advises.**"
-  > "This one is **Guardian**. Not 'Nexus Guardian': prefixing it implies
-  > Guardian is a module of Nexus, which ADR-0001 and the architecture exist
-  > to deny."
+So **Guardian** is the current product name and **"Nexus Guardian" is
+deprecated**. This site was already correct — it follows
+`alphalogix-guardian` ADR-0001 and presents Guardian as a peer of Nexus, not
+a module of it. No site change was needed.
 
-- `alphalogix-atlantis/README.md`:
-  > "Guardian sees. **Core** orchestrates. Sage advises."
-  > and a component table listing "**Nexus Guardian** — edge detection"
+CI now fails the build if "Nexus Guardian" appears in the published output,
+so the retired name cannot creep back in through a copy edit.
 
-So: does Nexus orchestrate, or does *Nexus Core*? Is it "Guardian" or "Nexus
-Guardian"? These cannot both be right, and the website is where the answer
-becomes public and expensive to change.
+### Still needs tidying elsewhere (not blocking this site)
 
-This site currently follows ADR-0001 (Guardian as a peer) on the grounds that a
-decision record outranks a prose line in another repo's README. **Confirm or
-correct before launch.**
+`alphalogix-atlantis/README.md` still carries the old name and an
+inconsistent shorthand:
+
+- a component table listing "**Nexus Guardian** — edge detection"
+- the line "Guardian sees. **Core** orchestrates. Sage advises."
+
+Both are now confirmed stale rather than a live disagreement. Worth
+correcting at the source so the next person reading that repo does not
+reintroduce the retired name. The shorthand this site uses is Guardian's
+own: **"Guardian sees. Nexus orchestrates. Sage advises."**
 
 ## 2. How many products are we actually announcing?
 

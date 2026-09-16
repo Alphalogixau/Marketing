@@ -37,13 +37,20 @@ abstract topology and pipeline diagrams instead — see
 
 ## Naming
 
-Follow `alphalogix-guardian` ADR-0001: **Guardian is a peer of Nexus, not
-"Nexus Guardian."** Prefixing implies Guardian is a module of Nexus, which the
-architecture exists to deny.
+**The product is Guardian.** Never "Nexus Guardian" — that was its previous
+name and was retired (decision recorded 16 Sep 2026, see
+`OPEN-QUESTIONS.md`). Prefixing it implies Guardian is a module of Nexus,
+which `alphalogix-guardian` ADR-0001 and the architecture exist to deny.
 
-⚠️ `alphalogix-atlantis/README.md` currently contradicts this — it lists
-"Nexus Guardian — edge detection" and says "Core orchestrates" where Guardian's
-README says "Nexus orchestrates." **Unresolved.** See `OPEN-QUESTIONS.md`.
+Guardian is a **peer** of Nexus. The shorthand is Guardian's own:
+
+> Guardian sees. Nexus orchestrates. Sage advises.
+
+CI fails the build if "Nexus Guardian" appears in the published output.
+
+Note that `alphalogix-atlantis/README.md` still carries the retired name and
+says "Core orchestrates". That is stale copy in another repository, not a
+competing decision — do not follow it.
 
 ## Do say
 
