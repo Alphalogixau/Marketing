@@ -11,6 +11,10 @@ const basePath = process.env.PREVIEW_BASE_PATH || undefined
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   ...(basePath ? { basePath, assetPrefix: basePath } : {}),
+  // basePath does NOT rewrite raw <img src="/..."> strings — only next/link,
+  // next/image and framework-emitted asset URLs. Anything hand-written must
+  // prefix itself, so the value is exposed here. See lib/asset.ts.
+  env: { NEXT_PUBLIC_BASE_PATH: basePath ?? '' },
   // Static export -> /out, matching the Azure Static Web Apps workflow in .github/workflows
   output: 'export',
   // Serves "/" (landing page) and "/platform/*" (product pages).

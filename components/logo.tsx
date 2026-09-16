@@ -16,11 +16,13 @@
  * width/height are set so the browser reserves the box and the header does
  * not shift as the image loads.
  */
+import { asset } from '@/lib/asset'
+
 export function Wordmark({ className }: { className?: string }) {
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
     <img
-      src="/brand/alphalogix-horizontal-white.png"
+      src={asset('/brand/alphalogix-horizontal-white.png')}
       alt="Alphalogix"
       width={372}
       height={72}
