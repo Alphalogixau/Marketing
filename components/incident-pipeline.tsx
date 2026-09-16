@@ -116,7 +116,7 @@ export function IncidentPipeline() {
                     )}
                   </h3>
                   <motion.p
-                    animate={reduced ? {} : { opacity: isActive ? 1 : 0.55 }}
+                    animate={reduced ? {} : { opacity: isActive ? 1 : 0.72 }}
                     transition={{ duration: 0.45 }}
                     className="mt-1 max-w-xl text-sm leading-relaxed text-navy-300"
                   >

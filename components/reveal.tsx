@@ -28,6 +28,10 @@ export function Reveal({
 
   return (
     <motion.div
+      // data-reveal lets the <noscript> rule in app/layout.tsx force these
+      // visible. Without it, a JS failure leaves the page blank — the reveal
+      // sets opacity:0 inline before the observer ever fires.
+      data-reveal
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}

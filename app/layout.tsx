@@ -28,6 +28,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-AU">
+      <head>
+        {/* Scroll reveals set opacity:0 inline. Without JS the observer never
+            fires and the page would render blank below the hero. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="bg-navy-950 antialiased">
         <a
           href="#main"
