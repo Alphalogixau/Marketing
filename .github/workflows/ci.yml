@@ -137,7 +137,8 @@ jobs:
             'linkedin.com/company/alphalogixaus' \
             'instagram.com/alphalogixaus' \
             'x.com/alphalogixaus' \
-            'nexus.alphalogix.com.au'
+            'nexus.alphalogix.com.au' \
+            'alphalogix.rmmservice.com.au'
           do
             if ! grep -qF "$needle" out/index.html; then
               echo "::error::missing link: $needle — see lib/contact.ts"
