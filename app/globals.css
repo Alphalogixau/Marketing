@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Alphalogix design tokens
+   Palette recovered from the existing alphalogix.com.au stylesheet so the new
+   surfaces stay on-brand with the WordPress pages they sit alongside:
+     #112337 navy   #93e4ff cyan   #ceeb59 lime   #527eff blue   #b2bbc0 grey
+   Each pillar owns one accent so a visitor can tell products from services
+   without reading a word.
+   ========================================================================== */
+@theme {
+  /* Brand neutrals — navy ramp */
+  --color-navy-950: #070f1a;
+  --color-navy-900: #0b1725;
+  --color-navy-800: #112337;
+  --color-navy-700: #1b3149;
+  --color-navy-600: #294460;
+  --color-navy-500: #3d5c7a;
+  --color-navy-400: #5b7b99;
+  --color-navy-300: #8ba4bd;
+  --color-navy-200: #b2bbc0;
+  --color-navy-100: #d8dfe4;
+  --color-navy-50:  #f2f5f7;
+
+  /* Pillar accents */
+  --color-nexus-400: #93e4ff;   /* Nexus   — orchestration, data flow */
+  --color-nexus-500: #4cc9f0;
+  --color-nexus-600: #1aa3cc;
+  --color-guardian-400: #ceeb59; /* Guardian — active monitoring */
+  --color-guardian-500: #adcc31;
+  --color-guardian-600: #869e1f;
+  --color-msp-400: #527eff;      /* Managed services — trust, continuity */
+  --color-msp-500: #204ce5;
+  --color-msp-600: #001ab3;
+
+  /* Semantic */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f2f5f7;
+  --color-ink: #0b1725;
+  --color-ink-muted: #4c5a68;
+
+  /* Type — one scale, fluid, no magic numbers in components */
+  --text-display: clamp(2.75rem, 6vw, 5rem);
+  --text-h1: clamp(2.25rem, 4.5vw, 3.5rem);
+  --text-h2: clamp(1.75rem, 3vw, 2.5rem);
+  --text-h3: clamp(1.25rem, 2vw, 1.5rem);
+  --text-lead: clamp(1.0625rem, 1.5vw, 1.25rem);
+
+  --font-sans: "Inter var", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+  /* Motion — shared durations/easings so animation feels like one system */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer base {
+  * { border-color: var(--color-navy-100); }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" 32;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Respect users who don't want motion. Every animated component below
+     degrades to its final state rather than disappearing. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-nexus-500);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  /* Subtle engineered grid used behind dark sections */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(147, 228, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(147, 228, 255, 0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .bg-radial-fade {
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(147, 228, 255, 0.14), transparent 70%);
+  }
+
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+}
